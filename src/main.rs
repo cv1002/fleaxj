@@ -47,12 +47,13 @@ async fn main() -> std::io::Result<()> {
         // register open telemetry jaeger tracer
         .with({
             global::set_text_map_propagator(opentelemetry_jaeger::Propagator::new());
-            tracing_opentelemetry::layer().with_tracer(
+            let jaeger_tracer = tracing_opentelemetry::layer().with_tracer(
                 opentelemetry_jaeger::new_agent_pipeline()
                     .with_service_name("fleaxj")
                     .install_simple()
                     .unwrap(),
-            )
+            );
+            jaeger_tracer
         })
         // initialize the tracing subscriber
         .init();
