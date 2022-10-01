@@ -20,8 +20,8 @@ pub type AsyncLazy<T> = Lazy<AsyncLazyInner<T>>;
 #[macro_export]
 macro_rules! AsyncLazyNew {
     ($e:expr) => {
-        fleaxj::util::lazy::AsyncLazy::new(|| {
-            fleaxj::util::lazy::AsyncLazyInner::new(async { $e.await })
+        $crate::util::lazy::AsyncLazy::new(|| {
+            $crate::util::lazy::AsyncLazyInner::new(async { $e.await })
         })
     };
 }
@@ -29,6 +29,6 @@ macro_rules! AsyncLazyNew {
 #[macro_export]
 macro_rules! LazyNew {
     ($e:expr) => {
-        fleaxj::util::lazy::Lazy::new(|| $e)
+        $crate::util::lazy::Lazy::new(|| $e)
     };
 }
