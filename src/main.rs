@@ -16,8 +16,10 @@ use conf::{tracing_config_initalize, CONF};
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    // 初始化Tracing
     tracing_config_initalize();
 
+    // 初始化ActixWeb
     HttpServer::new(|| App::new().configure(router::router))
         .bind(CONF.bind_args())
         .unwrap()
