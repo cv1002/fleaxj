@@ -31,7 +31,8 @@ pub async fn hello(req: web::Query<Param>) -> impl Responder {
     HttpResponse::Ok().body("Hello world!")
 }
 
+/// Use this function to initialize routers
 pub fn router(cfg: &mut web::ServiceConfig) {
     cfg.service(hello)
-        .service(actix_files::Files::new("/", "./static").use_last_modified(true));
+        .service(actix_files::Files::new("/", "./static"));
 }

@@ -9,6 +9,7 @@ use tracing_subscriber::{fmt, prelude::*, util::SubscriberInitExt};
 /// Use of other module
 use crate::{util::lazy::Lazy, LazyNew};
 
+/// Configuration of database
 #[derive(Serialize, Deserialize)]
 pub struct DBArgs {
     pub user: String,
@@ -20,14 +21,17 @@ pub struct DBArgs {
     private: Option<()>,
 }
 
+/// Configuration file format
 #[derive(Serialize, Deserialize)]
 pub struct ConfFile {
     port: u16,
     host: String,
     db: DBArgs,
 }
+/// CONF: static immutable, just for read, can't write.
 pub static CONF: Lazy<ConfFile> =
     LazyNew!(toml::from_slice(&std::fs::read("./conf.toml").unwrap()).unwrap());
+/// Use these functions to get configurations inside CONF.
 impl ConfFile {
     pub fn bind_args(&self) -> (&str, u16) {
         (&self.host, self.port)
@@ -37,6 +41,7 @@ impl ConfFile {
     }
 }
 
+/// Use this function to initialize tracing.
 pub fn tracing_config_initalize() {
     tracing_subscriber::registry()
         // register hourly_logger
