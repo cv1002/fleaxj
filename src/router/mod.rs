@@ -26,18 +26,13 @@ pub async fn hello(req: web::Query<Param>) -> impl Responder {
         })
         .insert(CONN_POLL.get().await)
         .await
-        .inspect_err(|err| log::error!("{}", err.to_string()))
+        .inspect_error(|err| log::error!("{}", err.to_string()))
     })
     .await
     // 成功逻辑
     .map(|_| HttpResponse::Ok().body("Ok"))
     // 失败逻辑
-    .unwrap_or_else(|err| {
-        // 打个失败日志
-        log::error!("{}", err.to_string());
-        // 返回错误码，不能把数据库的错误信息暴露给用户
-        HttpResponse::InternalServerError().body("Failed")
-    })
+    .unwrap_or_else(|_| HttpResponse::InternalServerError().body("Failed"))
 }
 
 /// Use this function to initialize routers

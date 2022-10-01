@@ -1,5 +1,5 @@
 pub trait ResultInspect<F: FnOnce(&T), T: Sized> {
-    fn inspect(self, f: F) -> Self;
+    fn inspect_ok(self, f: F) -> Self;
 }
 
 pub trait ResultInspectRef<F: FnOnce(&T), T: Sized> {
@@ -7,7 +7,7 @@ pub trait ResultInspectRef<F: FnOnce(&T), T: Sized> {
 }
 
 impl<F: FnOnce(&T), T: Sized, E> ResultInspect<F, T> for Result<T, E> {
-    fn inspect(self, f: F) -> Self {
+    fn inspect_ok(self, f: F) -> Self {
         if let Ok(ref o) = self.as_ref() {
             f(&o);
         }
@@ -25,7 +25,7 @@ impl<F: FnOnce(&T), T: Sized, E> ResultInspectRef<F, T> for Result<T, E> {
 }
 
 pub trait ResultInspectErr<F: FnOnce(&E), E: Sized> {
-    fn inspect_err(self, f: F) -> Self;
+    fn inspect_error(self, f: F) -> Self;
 }
 
 pub trait ResultInspectErrRef<F: FnOnce(&E), E: Sized> {
@@ -33,7 +33,7 @@ pub trait ResultInspectErrRef<F: FnOnce(&E), E: Sized> {
 }
 
 impl<F: FnOnce(&E), T, E: Sized> ResultInspectErr<F, E> for Result<T, E> {
-    fn inspect_err(self, f: F) -> Self {
+    fn inspect_error(self, f: F) -> Self {
         if let Err(ref e) = self.as_ref() {
             f(&e);
         }
@@ -51,7 +51,7 @@ impl<F: FnOnce(&E), T, E: Sized> ResultInspectErrRef<F, E> for Result<T, E> {
 }
 
 pub trait OptionInspect<F: FnOnce(&T), T: Sized> {
-    fn inspect(self, f: F) -> Self;
+    fn inspect_some(self, f: F) -> Self;
 }
 
 pub trait OptionInspectRef<F: FnOnce(&T), T: Sized> {
@@ -59,7 +59,7 @@ pub trait OptionInspectRef<F: FnOnce(&T), T: Sized> {
 }
 
 impl<F: FnOnce(&T), T: Sized> OptionInspect<F, T> for Option<T> {
-    fn inspect(self, f: F) -> Self {
+    fn inspect_some(self, f: F) -> Self {
         if let Some(ref o) = self.as_ref() {
             f(&o);
         }
