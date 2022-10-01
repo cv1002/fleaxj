@@ -23,6 +23,7 @@ pub struct DBArgs {
 
 /// Configuration file format
 /// # Example
+/// 
 /// ```toml
 /// port = 8080
 /// host = "localhost"
