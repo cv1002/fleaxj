@@ -22,6 +22,16 @@ pub struct DBArgs {
 }
 
 /// Configuration file format
+/// # Example
+/// ```toml
+/// port = 8080
+/// host = "localhost"
+/// [db]
+/// user = "****"
+/// host = "****:3306"
+/// database = "****"
+/// password = "****"
+/// ```
 #[derive(Serialize, Deserialize)]
 pub struct ConfFile {
     port: u16,
