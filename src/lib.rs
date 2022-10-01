@@ -8,5 +8,4 @@ pub mod conf;
 pub mod database;
 pub mod router;
 pub mod serve;
-#[macro_use]
 pub mod util;
