@@ -1,0 +1,7 @@
+port = 8080
+host = "localhost"
+[db]
+user = "****"
+host = "****:3306"
+database = "****"
+password = "****"
