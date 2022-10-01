@@ -1,3 +1,4 @@
+/* Trait declaration */
 pub trait ResultInspect<F: FnOnce(&T), T: Sized> {
     fn inspect_ok(self, f: F) -> Self;
 }
@@ -6,6 +7,31 @@ pub trait ResultInspectRef<F: FnOnce(&T), T: Sized> {
     fn inspect_ref(&self, f: F);
 }
 
+pub trait ResultInspectErr<F: FnOnce(&E), E: Sized> {
+    fn inspect_error(self, f: F) -> Self;
+}
+
+pub trait ResultInspectErrRef<F: FnOnce(&E), E: Sized> {
+    fn inspect_err_ref(&self, f: F);
+}
+
+pub trait OptionInspect<F: FnOnce(&T), T: Sized> {
+    fn inspect_some(self, f: F) -> Self;
+}
+
+pub trait OptionInspectRef<F: FnOnce(&T), T: Sized> {
+    fn inspect_ref(&self, f: F);
+}
+
+pub trait OptionInspectNone<F: FnOnce()> {
+    fn inspect_none(self, f: F) -> Self;
+}
+
+pub trait OptionInspectNoneRef<F: FnOnce()> {
+    fn inspect_none_ref(&self, f: F);
+}
+
+/* Trait implement */
 impl<F: FnOnce(&T), T: Sized, E> ResultInspect<F, T> for Result<T, E> {
     fn inspect_ok(self, f: F) -> Self {
         if let Ok(ref o) = self.as_ref() {
@@ -24,13 +50,6 @@ impl<F: FnOnce(&T), T: Sized, E> ResultInspectRef<F, T> for Result<T, E> {
     }
 }
 
-pub trait ResultInspectErr<F: FnOnce(&E), E: Sized> {
-    fn inspect_error(self, f: F) -> Self;
-}
-
-pub trait ResultInspectErrRef<F: FnOnce(&E), E: Sized> {
-    fn inspect_err_ref(&self, f: F);
-}
 
 impl<F: FnOnce(&E), T, E: Sized> ResultInspectErr<F, E> for Result<T, E> {
     fn inspect_error(self, f: F) -> Self {
@@ -50,14 +69,6 @@ impl<F: FnOnce(&E), T, E: Sized> ResultInspectErrRef<F, E> for Result<T, E> {
     }
 }
 
-pub trait OptionInspect<F: FnOnce(&T), T: Sized> {
-    fn inspect_some(self, f: F) -> Self;
-}
-
-pub trait OptionInspectRef<F: FnOnce(&T), T: Sized> {
-    fn inspect_ref(&self, f: F);
-}
-
 impl<F: FnOnce(&T), T: Sized> OptionInspect<F, T> for Option<T> {
     fn inspect_some(self, f: F) -> Self {
         if let Some(ref o) = self.as_ref() {
@@ -74,14 +85,6 @@ impl<F: FnOnce(&T), T: Sized> OptionInspectRef<F, T> for Option<T> {
             f(&o);
         }
     }
-}
-
-pub trait OptionInspectNone<F: FnOnce()> {
-    fn inspect_none(self, f: F) -> Self;
-}
-
-pub trait OptionInspectNoneRef<F: FnOnce()> {
-    fn inspect_none_ref(&self, f: F);
 }
 
 impl<F: FnOnce(), T> OptionInspectNone<F> for Option<T> {
