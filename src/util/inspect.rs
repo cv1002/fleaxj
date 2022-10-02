@@ -4,7 +4,7 @@ pub trait ResultInspect<F: FnOnce(&T), T: Sized> {
     fn inspect_ok(self, f: F) -> Self;
 }
 pub trait ResultInspectRef<F: FnOnce(&T), T: Sized> {
-    /// Call function when ok.
+    /// Call function when ok, but doesn't move.
     fn inspect_ref(&self, f: F);
 }
 pub trait ResultInspectErr<F: FnOnce(&E), E: Sized> {
