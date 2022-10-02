@@ -11,12 +11,9 @@ pub type AsyncLazy<T> = Lazy<AsyncLazyInner<T>>;
 /// ```
 /// use fleaxj::{util::lazy::AsyncLazy, AsyncLazyNew};
 ///
-/// static temp: AsyncLazy<i32> = AsyncLazyNew!(async { 1 });
+/// static TEMP: AsyncLazy<i32> = AsyncLazyNew!(async { 1 });
 ///
-/// async fn test() {
-///     assert!(temp.get().await.eq(&1));
-/// }
-/// test();
+/// async { assert!(TEMP.get().await.eq(&1)); };
 /// ```
 #[macro_export]
 macro_rules! AsyncLazyNew {
@@ -33,12 +30,9 @@ macro_rules! AsyncLazyNew {
 /// use std::ops::Deref;
 /// use fleaxj::{util::lazy::Lazy, LazyNew};
 ///
-/// static temp: Lazy<i32> = LazyNew!(1);
+/// static TEMP: Lazy<i32> = LazyNew!(1);
 ///
-/// fn test() {
-///     assert!(temp.eq(&1));
-/// }
-/// test();
+/// assert!(TEMP.eq(&1));
 /// ```
 #[macro_export]
 macro_rules! LazyNew {
