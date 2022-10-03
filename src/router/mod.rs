@@ -54,9 +54,16 @@ pub async fn hi(req: web::Query<Param>) -> impl Responder {
     .unwrap_or_else(|_| HttpResponse::InternalServerError().body("Failed"))
 }
 
+#[get("/")]
+#[instrument(name = "index-request")]
+pub async fn index() -> impl Responder {
+    actix_files::NamedFile::open_async("./static/index.html").await
+}
+
 /// Use this function to initialize routers
 pub fn router(cfg: &mut web::ServiceConfig) {
     cfg.service(hello)
         .service(hi)
+        .service(index)
         .service(actix_files::Files::new("/", "./static"));
 }
