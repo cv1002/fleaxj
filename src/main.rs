@@ -23,8 +23,7 @@ async fn main() -> std::io::Result<()> {
     // 初始化ActixWeb
     HttpServer::new(|| App::new().configure(router::router))
         // HTTP初始化
-        .bind(CONF.bind_args())
-        .unwrap()
+        .transformation(|server| server.bind(CONF.bind_args()).unwrap())
         // HTTPS初始化
         .transformation(|server| {
             if let Some((addrs, builder)) = CONF.use_ssl() {
