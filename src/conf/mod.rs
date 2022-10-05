@@ -80,7 +80,7 @@ impl ConfFile {
     pub fn bind_args(&self) -> (&str, u16) {
         (&self.host, self.port)
     }
-    pub fn use_ssl(&self) -> Option<((&str, u16), Result<SslAcceptorBuilder, ErrorStack>)> {
+    pub fn ssl_config(&self) -> Option<((&str, u16), Result<SslAcceptorBuilder, ErrorStack>)> {
         self.ssl
             .as_ref()
             .map(|ssl| (ssl.ssl_bind_args(), ssl.ssl_builder()))

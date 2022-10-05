@@ -26,7 +26,7 @@ async fn main() -> std::io::Result<()> {
         .transformation(|server| server.bind(CONF.bind_args()).unwrap())
         // HTTPS初始化
         .transformation(|server| {
-            if let Some((addrs, builder)) = CONF.use_ssl() {
+            if let Some((addrs, builder)) = CONF.ssl_config() {
                 server.bind_openssl(addrs, builder.unwrap()).unwrap()
             } else {
                 log::info!("You do not provide ssl/tls certs!");
