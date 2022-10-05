@@ -11,7 +11,7 @@ use sea_orm::{ConnectOptions, Database, DatabaseConnection};
 /// Use of other module
 use crate::{conf::{DBArgs, CONF}, util::lazy::AsyncLazy, AsyncLazyNew};
 
-pub async fn establish_connection() -> DatabaseConnection {
+async fn establish_connection() -> DatabaseConnection {
     let DBArgs {
         user,
         host,
