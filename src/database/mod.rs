@@ -37,6 +37,6 @@ pub static CONN_POLL: AsyncLazy<DatabaseConnection> =
 #[macro_export]
 macro_rules! active_model {
     ($name:ident { $($id:ident: $expr:expr),* $(,)? }) => {
-        crate::database::model::$name::ActiveModel { $($id: sea_orm::Set($expr)),* , ..Default::default() }
+        $crate::database::model::$name::ActiveModel { $($id: sea_orm::Set($expr)),* , ..Default::default() }
     };
 }

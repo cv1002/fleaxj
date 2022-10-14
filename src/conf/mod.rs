@@ -95,36 +95,33 @@ pub fn tracing_config_initalize() {
     tracing_subscriber::registry()
         // register hourly_logger
         .with({
-            let hourly_logger = fmt::layer()
+            fmt::layer()
                 .pretty()
                 .with_target(true)
                 .with_line_number(true)
                 .with_ansi(false)
-                .with_writer(rolling::hourly("log", "tracelog_hourly.log"));
-            hourly_logger
+                .with_writer(rolling::hourly("log", "tracelog_hourly.log"))
         })
         // register wholely_logger
         .with({
-            let wholely_logger = fmt::layer()
+            fmt::layer()
                 .pretty()
                 .with_target(true)
                 .with_line_number(true)
                 .with_ansi(false)
-                .with_writer(rolling::never("log", "tracelog_whole.log"));
-            wholely_logger
+                .with_writer(rolling::never("log", "tracelog_whole.log"))
         })
         // register console logger
         .with(fmt::layer().pretty().with_writer(std::io::stdout))
         // register open telemetry jaeger tracer
         .with({
             global::set_text_map_propagator(opentelemetry_jaeger::Propagator::new());
-            let jaeger_tracer = tracing_opentelemetry::layer().with_tracer(
+            tracing_opentelemetry::layer().with_tracer(
                 opentelemetry_jaeger::new_agent_pipeline()
                     .with_service_name("fleaxj")
                     .install_batch(opentelemetry::runtime::Tokio)
                     .unwrap(),
-            );
-            jaeger_tracer
+            )
         })
         // initialize the tracing subscriber
         .init();
