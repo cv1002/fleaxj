@@ -1,3 +1,4 @@
+/// Use of openssl
 use openssl::{error::ErrorStack, ssl::SslAcceptorBuilder};
 /// Use of opentelemetry
 use opentelemetry::global;
