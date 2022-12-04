@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-#![allow(unstable_name_collisions)]
 
 /* Declare the mods */
 mod conf;
