@@ -5,7 +5,7 @@ pub type AsyncLazyInner<T> = async_oncecell::Lazy<T>;
 /// Lazy async initialized value, initialize when first used.
 pub type AsyncLazy<T> = Lazy<AsyncLazyInner<T>>;
 
-/// Construct an AsyncLazy<T>
+/// Construct an `AsyncLazy<T>`
 /// # Examples
 ///
 /// ```
@@ -23,7 +23,7 @@ macro_rules! AsyncLazyNew {
         })
     };
 }
-/// Construct a Lazy<T>
+/// Construct a `Lazy<T>`
 /// # Examples
 ///
 /// ```
