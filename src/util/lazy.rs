@@ -23,7 +23,7 @@ macro_rules! AsyncLazyNew {
         })
     };
 }
-/// Construct an Lazy<T>
+/// Construct a Lazy<T>
 /// # Examples
 ///
 /// ```
